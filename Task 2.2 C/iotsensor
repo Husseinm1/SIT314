@@ -1,0 +1,39 @@
+const mongoose = require('mongoose');
+const Sensor = require('./models/sensor');
+
+
+
+mongoose.connect('mongodb+srv://dbuser:hi@sit313.4wegh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{ useUnifiedTopology: true });
+
+
+const sensordata = { 
+    id: 0, 
+    name: "motionsensor", 
+    address: "221 Burwood Hwy, Burwood VIC 3125", 
+    time: Date.now(), 
+    motion: 1 
+ } 
+ 
+const low = 0; 
+const high = 1; 
+reading = Math.floor((Math.random() * 1) +0.5);
+sensordata.motion = reading;
+
+
+
+ const jsonString = JSON.stringify(sensordata); 
+ console.log(jsonString); 
+
+ const newSensor = new Sensor({ 
+    id: sensordata.id, 
+    name: sensordata.name, 
+    address: sensordata.address, 
+    time: sensordata.time, 
+    motion: sensordata.motion 
+}); 
+
+newSensor.save().then(doc => { 
+console.log(doc); 
+}).then(() => { 
+mongoose.connection.close(); 
+});
